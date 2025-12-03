@@ -33,6 +33,7 @@ object AppModule {
       }
       install(DefaultRequest) {
         contentType(ContentType.Application.Json)
+        url(urlString = "https://api.baubuddy.de/")
       }
     }
   }
