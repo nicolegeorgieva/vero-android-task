@@ -16,5 +16,5 @@ data class TaskUi(
   val task: String,
   val title: String,
   val description: String,
-  val color: Color,
+  val color: Color?,
 )
