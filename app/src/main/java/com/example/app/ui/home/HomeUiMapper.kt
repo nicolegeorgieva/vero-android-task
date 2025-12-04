@@ -23,11 +23,20 @@ class HomeUiMapper @Inject constructor(
               task = task.task,
               title = task.title,
               description = task.description,
-              color = Color(task.colorHex.removePrefix("#").toLong(16))
+              color = when (val color = mapColorHex(task.colorHex)) {
+                is Either.Left<Unit> -> Color.White
+                is Either.Right<Color> -> color.value
+              }
             )
           }.toImmutableList()
         )
       }
     ) ?: HomeState.Loading
   }
+}
+
+private fun mapColorHex(color: String): Either<Unit, Color> {
+  return Either.catch {
+    Color(color.removePrefix("#").toLong(16))
+  }.mapLeft { Unit }
 }
