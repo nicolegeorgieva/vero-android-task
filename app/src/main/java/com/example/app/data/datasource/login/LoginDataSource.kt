@@ -1,4 +1,4 @@
-package com.example.app.data.datasource
+package com.example.app.data.datasource.login
 
 import arrow.core.Either
 import io.ktor.client.HttpClient
@@ -6,8 +6,8 @@ import io.ktor.client.call.body
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.isSuccess
 import javax.inject.Inject
 
 class LoginDataSource @Inject constructor(
@@ -18,33 +18,16 @@ class LoginDataSource @Inject constructor(
     password: String
   ): Either<Throwable, SessionDto> {
     return Either.catch {
-      httpClient.post("index.php/login") {
+      val response = httpClient.post("index.php/login") {
         header(key = "Authorization", value = "Basic QVBJX0V4cGxvcmVyOjEyMzQ1NmlzQUxhbWVQYXNz")
         setBody(LoginRequestDto(username = username, password = password))
-      }.body<SessionDto>()
+      }
+
+      when {
+        response.status.isSuccess() -> response.body<SessionDto>()
+        response.status == HttpStatusCode.Unauthorized -> throw IncorrectCredentialsException()
+        else -> throw UnexpectedException()
+      }
     }
   }
 }
-
-@Serializable
-data class LoginRequestDto(
-  val username: String,
-  val password: String,
-)
-
-@Serializable
-data class SessionDto(
-  val oauth: OauthDto,
-)
-
-@Serializable
-data class OauthDto(
-  @SerialName("access_token")
-  val accessToken: String,
-  @SerialName("expires_in")
-  val expiresIn: Long,
-  @SerialName("token_type")
-  val tokenType: String,
-  @SerialName("refresh_token")
-  val refreshToken: String,
-)
