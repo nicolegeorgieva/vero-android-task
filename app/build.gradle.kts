@@ -60,6 +60,7 @@ dependencies {
   implementation(libs.arrow.core)
   implementation(libs.coil)
   implementation(libs.coil.http)
+  implementation(libs.dataStore)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
