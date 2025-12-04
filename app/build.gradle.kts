@@ -87,5 +87,6 @@ dependencies {
   implementation(libs.ktor.client.core)
   implementation(libs.ktor.client.serialization)
   implementation(libs.ktor.logging)
+  implementation(libs.ktor.auth.plugin)
   // endregion
 }
