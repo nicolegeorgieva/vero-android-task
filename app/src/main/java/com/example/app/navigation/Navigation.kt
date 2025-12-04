@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.app.ui.home.HomeScreen
+import com.example.app.ui.login.LoginScreen
 
 @Composable
 fun Navigation(navController: NavHostController) {
@@ -12,6 +13,9 @@ fun Navigation(navController: NavHostController) {
     navController = navController,
     startDestination = Screen.Home
   ) {
+    composable<Screen.Login> {
+      LoginScreen()
+    }
     composable<Screen.Home> {
       HomeScreen()
     }
