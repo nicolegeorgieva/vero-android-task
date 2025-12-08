@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either
-import arrow.core.raise.either
 import arrow.core.right
 import com.example.app.R
 import com.example.app.common.ComposeViewModel
@@ -31,6 +30,7 @@ class LoginViewModel @Inject constructor(
   private var usernameErrorMessage by mutableStateOf<String?>(null)
   private var password by mutableStateOf("")
   private var passwordErrorMessage by mutableStateOf<String?>(null)
+  private var loginButtonLoading by mutableStateOf(false)
   private var serverErrorMessage by mutableStateOf("")
 
   @Composable
@@ -38,6 +38,7 @@ class LoginViewModel @Inject constructor(
     return LoginState(
       username = username,
       password = password,
+      loginButtonLoading = loginButtonLoading
     )
   }
 
@@ -58,48 +59,29 @@ class LoginViewModel @Inject constructor(
   }
 
   private fun handleLoginClick() {
-    viewModelScope.launch {
-      either {
-        val validInput = validateLoginFields()
-          .onLeft { errors ->
-            errors.forEach { error ->
-              when (error) {
-                is InputError.UsernameError -> usernameErrorMessage = error.message
-                is InputError.PasswordError -> passwordErrorMessage = error.message
-              }
-            }
-          }.bind()
-
-        sessionUseCase.login(
-          username = validInput.username,
-          password = validInput.password,
-        ).onLeft { error ->
-          serverErrorMessage = when (error) {
-            LoginError.IncorrectCredentials -> resourceProvider.getString(
-              R.string.login_error_incorrect_credentials
-            )
-
-            is LoginError.Other -> errorUiMapper.map(error.error)
-          }
-        }.bind()
-
-        navigator.navigateTo(Screen.Home)
+    validateLoginFields().onRight {
+      viewModelScope.launch {
+        loginButtonLoading = true
+        performLogin(it)
+        loginButtonLoading = false
       }
     }
   }
 
-  private fun validateLoginFields(): Either<List<InputError>, ValidInput> {
-    val errors = mutableListOf<InputError>()
+  private fun validateLoginFields(): Either<Unit, ValidInput> {
+    var hasError = false
 
     if (username.isBlank()) {
-      errors.add(InputError.UsernameError(resourceProvider.getString(R.string.login_error_blank_username)))
+      usernameErrorMessage = resourceProvider.getString(R.string.login_error_blank_username)
+      hasError = true
     }
     if (password.isEmpty()) {
-      errors.add(InputError.PasswordError(resourceProvider.getString(R.string.login_error_empty_password)))
+      passwordErrorMessage = resourceProvider.getString(R.string.login_error_empty_password)
+      hasError = true
     }
 
-    if (errors.isNotEmpty()) {
-      return Either.Left(errors)
+    if (hasError) {
+      return Either.Left(Unit)
     }
 
     return ValidInput(
@@ -108,13 +90,25 @@ class LoginViewModel @Inject constructor(
     ).right()
   }
 
-  private sealed interface InputError {
-    data class UsernameError(val message: String) : InputError
-    data class PasswordError(val message: String) : InputError
-  }
-
   private data class ValidInput(
     val username: String,
     val password: String,
   )
+
+  private suspend fun performLogin(input: ValidInput) {
+    sessionUseCase.login(
+      username = input.username,
+      password = input.password,
+    ).onLeft { error ->
+      serverErrorMessage = when (error) {
+        LoginError.IncorrectCredentials -> resourceProvider.getString(
+          R.string.login_error_incorrect_credentials
+        )
+
+        is LoginError.Other -> errorUiMapper.map(error.error)
+      }
+    }.onRight {
+      navigator.navigateTo(Screen.Home)
+    }
+  }
 }
