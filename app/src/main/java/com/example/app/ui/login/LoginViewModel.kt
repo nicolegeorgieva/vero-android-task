@@ -31,7 +31,7 @@ class LoginViewModel @Inject constructor(
   private var password by mutableStateOf("")
   private var passwordErrorMessage by mutableStateOf<String?>(null)
   private var loginButtonLoading by mutableStateOf(false)
-  private var serverErrorMessage by mutableStateOf("")
+  private var serverErrorMessage by mutableStateOf<String?>(null)
 
   @Composable
   override fun uiState(): LoginState {
@@ -40,7 +40,8 @@ class LoginViewModel @Inject constructor(
       password = password,
       usernameError = usernameErrorMessage,
       passwordError = passwordErrorMessage,
-      loginButtonLoading = loginButtonLoading
+      loginButtonLoading = loginButtonLoading,
+      serverErrorMessage = serverErrorMessage,
     )
   }
 

@@ -9,4 +9,5 @@ data class LoginState(
   val usernameError: String?,
   val passwordError: String?,
   val loginButtonLoading: Boolean,
+  val serverErrorMessage: String?,
 )

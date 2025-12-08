@@ -75,5 +75,12 @@ fun LoginUi(
         onEvent(LoginEvent.LoginClick)
       }
     )
+    uiState.serverErrorMessage?.let {
+      Spacer(Modifier.height(12.dp))
+      Text(
+        text = it,
+        color = MaterialTheme.colorScheme.error,
+      )
+    }
   }
 }

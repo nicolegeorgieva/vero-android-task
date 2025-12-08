@@ -10,6 +10,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import com.example.app.R
 
 @Immutable
@@ -54,6 +56,11 @@ fun LoginInputField(
     },
     onValueChange = onValueChange,
     isError = input.error != null,
+    visualTransformation = if (input is LoginInputType.Password) {
+      PasswordVisualTransformation()
+    } else {
+      VisualTransformation.None
+    },
     supportingText = input.error?.let {
       {
         Text(text = it)
