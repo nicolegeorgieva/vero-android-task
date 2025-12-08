@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
-import arrow.core.raise.ensureNotNull
+import com.example.app.R
 import com.example.app.common.ComposeViewModel
+import com.example.app.common.ResourceProvider
 import com.example.app.domain.SessionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -18,9 +19,10 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
   private val sessionUseCase: SessionUseCase,
+  private val resourceProvider: ResourceProvider,
 ) : ComposeViewModel<LoginState, LoginEvent>() {
-  private var username by mutableStateOf<String?>(null)
-  private var password by mutableStateOf<String?>(null)
+  private var username by mutableStateOf("")
+  private var password by mutableStateOf("")
 
   @Composable
   override fun uiState(): LoginState {
@@ -57,18 +59,11 @@ class LoginViewModel @Inject constructor(
 
   private fun validateLoginFields(): Either<String, ValidInput> {
     return either {
-      val username = ensureNotNull(username) {
-        "Username is null"
-      }
-      val password = ensureNotNull(password) {
-        "Password is null"
-      }
-
       ensure(username.isNotBlank()) {
-        "Username is blank"
+        resourceProvider.getString(R.string.login_error_blank_username)
       }
       ensure(password.isNotEmpty()) {
-        "Password is empty"
+        resourceProvider.getString(R.string.login_error_empty_password)
       }
 
       ValidInput(

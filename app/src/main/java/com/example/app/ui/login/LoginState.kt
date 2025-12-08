@@ -4,6 +4,6 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 data class LoginState(
-  val username: String?,
-  val password: String?,
+  val username: String,
+  val password: String,
 )
