@@ -1,3 +1,9 @@
 package com.example.app.ui.login
 
-class LoginState()
+import androidx.compose.runtime.Immutable
+
+@Immutable
+data class LoginState(
+  val username: String?,
+  val password: String?,
+)
