@@ -1,11 +1,15 @@
 package com.example.app.ui.login.component
 
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import com.example.app.R
 
 @Immutable
@@ -29,8 +33,9 @@ fun LoginInputField(
   input: LoginInputType,
   modifier: Modifier = Modifier,
   onValueChange: (String) -> Unit,
+  onDone: (KeyboardActionScope.() -> Unit)? = null,
 ) {
-  TextField(
+  OutlinedTextField(
     modifier = modifier,
     value = input.value,
     label = {
@@ -38,6 +43,14 @@ fun LoginInputField(
     },
     placeholder = {
       LoginInputFieldTitle(input = input)
+    },
+    keyboardOptions = KeyboardOptions(
+      imeAction = if (input is LoginInputType.Username) ImeAction.Next else ImeAction.Done
+    ),
+    keyboardActions = if (onDone != null && input is LoginInputType.Password) {
+      KeyboardActions(onDone = onDone)
+    } else {
+      KeyboardActions.Default
     },
     onValueChange = onValueChange,
     isError = input.error != null,

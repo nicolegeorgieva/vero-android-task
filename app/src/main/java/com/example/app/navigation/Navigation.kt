@@ -11,7 +11,7 @@ import com.example.app.ui.login.LoginScreen
 fun Navigation(navController: NavHostController) {
   NavHost(
     navController = navController,
-    startDestination = Screen.Home
+    startDestination = Screen.Login
   ) {
     composable<Screen.Login> {
       LoginScreen()

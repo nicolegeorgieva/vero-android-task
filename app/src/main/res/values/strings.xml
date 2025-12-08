@@ -3,6 +3,7 @@
     <string name="error_message_no_internet">No internet connection</string>
     <string name="error_message_other">Oops. An error occurred.</string>
     <!--    region login -->
+    <string name="login_title">Welcome!</string>
     <string name="login_error_blank_username">Username should not be empty and should contain some characters except whitespace characters</string>
     <string name="login_error_empty_password">Password should not be empty</string>
     <string name="login_error_incorrect_credentials">Incorrect credentials</string>

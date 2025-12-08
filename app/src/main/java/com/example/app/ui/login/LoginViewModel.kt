@@ -54,10 +54,16 @@ class LoginViewModel @Inject constructor(
 
   private fun handleTypeUsername(event: LoginEvent.ChangeUsername) {
     username = event.username
+    if (usernameErrorMessage != null) {
+      validateUsername()
+    }
   }
 
   private fun handleTypePassword(event: LoginEvent.ChangePassword) {
     password = event.password
+    if (passwordErrorMessage != null) {
+      validatePassword()
+    }
   }
 
   private fun handleLoginClick() {
@@ -67,6 +73,22 @@ class LoginViewModel @Inject constructor(
         performLogin(it)
         loginButtonLoading = false
       }
+    }
+  }
+
+  private fun validateUsername() {
+    usernameErrorMessage = if (username.isBlank()) {
+      resourceProvider.getString(R.string.login_error_blank_username)
+    } else {
+      null
+    }
+  }
+
+  private fun validatePassword() {
+    passwordErrorMessage = if (password.isEmpty()) {
+      resourceProvider.getString(R.string.login_error_empty_password)
+    } else {
+      null
     }
   }
 
