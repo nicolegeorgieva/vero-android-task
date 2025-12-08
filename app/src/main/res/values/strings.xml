@@ -6,5 +6,8 @@
     <string name="login_error_blank_username">Username should not be empty and should contain some characters except whitespace characters</string>
     <string name="login_error_empty_password">Password should not be empty</string>
     <string name="login_error_incorrect_credentials">Incorrect credentials</string>
+    <string name="login_username_field_title">Username</string>
+    <string name="login_password_field_title">Password</string>
+    <string name="login_cta_button">Log in</string>
     <!--    endregion -->
 </resources>

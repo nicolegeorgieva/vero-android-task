@@ -38,23 +38,25 @@ class LoginViewModel @Inject constructor(
     return LoginState(
       username = username,
       password = password,
+      usernameError = usernameErrorMessage,
+      passwordError = passwordErrorMessage,
       loginButtonLoading = loginButtonLoading
     )
   }
 
   override fun onEvent(event: LoginEvent) {
     when (event) {
-      is LoginEvent.UsernameChange -> handleTypeUsername(event)
-      is LoginEvent.PasswordChange -> handleTypePassword(event)
+      is LoginEvent.ChangeUsername -> handleTypeUsername(event)
+      is LoginEvent.ChangePassword -> handleTypePassword(event)
       is LoginEvent.LoginClick -> handleLoginClick()
     }
   }
 
-  private fun handleTypeUsername(event: LoginEvent.UsernameChange) {
+  private fun handleTypeUsername(event: LoginEvent.ChangeUsername) {
     username = event.username
   }
 
-  private fun handleTypePassword(event: LoginEvent.PasswordChange) {
+  private fun handleTypePassword(event: LoginEvent.ChangePassword) {
     password = event.password
   }
 
