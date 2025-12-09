@@ -13,7 +13,7 @@ sealed interface HomeState {
 
 @Immutable
 data class TaskUi(
-  val task: String,
+  val id: String,
   val title: String,
   val description: String,
   val color: Color?,

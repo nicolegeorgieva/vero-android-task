@@ -17,7 +17,7 @@ class TaskRepository @Inject constructor(
       .map { tasks ->
         tasks.map { taskDto ->
           Task(
-            task = taskDto.task,
+            id = taskDto.task,
             title = taskDto.title,
             description = taskDto.description,
             colorHex = taskDto.colorCode,

@@ -20,7 +20,7 @@ class HomeUiMapper @Inject constructor(
         HomeState.Success(
           tasks = tasks.map { task ->
             TaskUi(
-              task = task.task,
+              id = task.id,
               title = task.title,
               description = task.description,
               color = mapColorHex(task.colorHex).getOrNull()
