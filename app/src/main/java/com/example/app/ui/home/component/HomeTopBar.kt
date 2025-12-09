@@ -1,4 +1,4 @@
-package com.example.app.ui.home
+package com.example.app.ui.home.component
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
