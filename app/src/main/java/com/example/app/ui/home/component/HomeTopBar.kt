@@ -13,7 +13,7 @@ import com.example.app.R
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopBar(
-  text: String,
+  searchText: String,
   modifier: Modifier = Modifier,
   onTextChange: (String) -> Unit,
   onQrIconClick: () -> Unit,
@@ -23,7 +23,7 @@ fun HomeTopBar(
     modifier = modifier,
     title = {
       SearchField(
-        text = text,
+        text = searchText,
         onTextChange = onTextChange,
         onQrIconClick = onQrIconClick,
       )

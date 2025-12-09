@@ -20,7 +20,7 @@ fun HomeUi(onEvent: (HomeEvent) -> Unit) {
   Scaffold(
     topBar = {
       HomeTopBar(
-        text = "TODO",
+        searchText = "TODO",
         onTextChange = {},
         onQrIconClick = {},
         onSettingsClick = {}
