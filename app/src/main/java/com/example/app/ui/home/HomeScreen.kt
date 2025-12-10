@@ -41,7 +41,11 @@ fun HomeUi(
         is HomeState.Content -> when (uiState.tasks) {
           is Loadable.Content<ImmutableList<TaskUi>> -> TasksList(
             tasks = uiState.tasks.value,
+            isRefreshing = uiState.isRefreshing,
             paddingValues = paddingValues,
+            onRefresh = {
+              onEvent(HomeEvent.RefreshTasks)
+            }
           )
 
           Loadable.Loading -> Loading(paddingValues = paddingValues)

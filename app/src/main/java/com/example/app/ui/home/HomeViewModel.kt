@@ -24,6 +24,7 @@ class HomeViewModel @Inject constructor(
   private val navigator: Navigator,
 ) : ComposeViewModel<HomeState, HomeEvent>() {
   private var tasksState by mutableStateOf<Either<ErrorResponse, List<Task>>?>(null)
+  private var tasksRefreshing by mutableStateOf(false)
 
   @Composable
   override fun uiState(): HomeState {
@@ -31,7 +32,10 @@ class HomeViewModel @Inject constructor(
       fetchTasks()
     }
 
-    return homeUiMapper.map(tasksState)
+    return homeUiMapper.map(
+      tasksResponse = tasksState,
+      isRefreshing = tasksRefreshing,
+    )
   }
 
   private suspend fun fetchTasks() {
@@ -41,7 +45,16 @@ class HomeViewModel @Inject constructor(
   override fun onEvent(event: HomeEvent) {
     when (event) {
       HomeEvent.SettingsClick -> handleSettingsClick()
+      HomeEvent.RefreshTasks -> handleRefreshTasks()
       HomeEvent.RetryClick -> handleRetryClick()
+    }
+  }
+
+  private fun handleRefreshTasks() {
+    viewModelScope.launch {
+      tasksRefreshing = true
+      tasksState = taskRepository.getTasks()
+      tasksRefreshing = false
     }
   }
 

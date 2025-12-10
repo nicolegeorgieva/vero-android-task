@@ -13,7 +13,10 @@ import javax.inject.Inject
 class HomeUiMapper @Inject constructor(
   private val errorUiMapper: ErrorUiMapper,
 ) {
-  fun map(tasksResponse: Either<ErrorResponse, List<Task>>?): HomeState {
+  fun map(
+    tasksResponse: Either<ErrorResponse, List<Task>>?,
+    isRefreshing: Boolean,
+  ): HomeState {
     return tasksResponse?.fold(
       ifLeft = { error ->
         HomeState.Error(message = errorUiMapper.map(error))
@@ -29,10 +32,14 @@ class HomeUiMapper @Inject constructor(
                 color = mapColorHex(task.colorHex).getOrNull()
               )
             }.toImmutableList()
-          )
+          ),
+          isRefreshing = isRefreshing,
         )
       }
-    ) ?: HomeState.Content(tasks = Loadable.Loading)
+    ) ?: HomeState.Content(
+      tasks = Loadable.Loading,
+      isRefreshing = isRefreshing,
+    )
   }
 }
 

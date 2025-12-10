@@ -13,6 +13,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,22 +27,30 @@ import kotlinx.collections.immutable.ImmutableList
 @Composable
 fun TasksList(
   tasks: ImmutableList<TaskUi>,
+  isRefreshing: Boolean,
   paddingValues: PaddingValues,
   modifier: Modifier = Modifier,
+  onRefresh: () -> Unit,
 ) {
-  LazyColumn(
+  PullToRefreshBox(
+    isRefreshing = isRefreshing,
+    onRefresh = onRefresh,
     modifier = modifier
-      .padding(paddingValues)
-      .padding(16.dp)
   ) {
-    items(
-      items = tasks,
-      key = {
-        it.id
-      },
-    ) { task ->
-      TaskCard(task = task)
-      Spacer(Modifier.height(12.dp))
+    LazyColumn(
+      modifier = modifier
+        .padding(paddingValues)
+        .padding(16.dp)
+    ) {
+      items(
+        items = tasks,
+        key = {
+          it.id
+        },
+      ) { task ->
+        TaskCard(task = task)
+        Spacer(Modifier.height(12.dp))
+      }
     }
   }
 }

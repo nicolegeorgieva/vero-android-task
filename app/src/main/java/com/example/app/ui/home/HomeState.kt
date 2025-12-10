@@ -7,7 +7,11 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 sealed interface HomeState {
-  data class Content(val tasks: Loadable<ImmutableList<TaskUi>>) : HomeState
+  data class Content(
+    val tasks: Loadable<ImmutableList<TaskUi>>,
+    val isRefreshing: Boolean,
+  ) : HomeState
+
   data class Error(val message: String) : HomeState
 }
 
