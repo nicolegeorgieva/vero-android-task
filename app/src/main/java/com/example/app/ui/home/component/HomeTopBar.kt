@@ -1,5 +1,6 @@
 package com.example.app.ui.home.component
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +24,7 @@ fun HomeTopBar(
     modifier = modifier,
     title = {
       SearchField(
+        modifier = Modifier.fillMaxWidth(),
         text = searchText,
         onTextChange = onTextChange,
         onQrIconClick = onQrIconClick,
