@@ -41,7 +41,12 @@ class HomeViewModel @Inject constructor(
   override fun onEvent(event: HomeEvent) {
     when (event) {
       HomeEvent.SettingsClick -> handleSettingsClick()
+      HomeEvent.RetryClick -> handleRetryClick()
     }
+  }
+
+  private fun handleRetryClick() {
+    // TODO
   }
 
   private fun handleSettingsClick() {

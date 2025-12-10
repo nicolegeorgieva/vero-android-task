@@ -2,6 +2,7 @@
     <string name="app_name">MyApp</string>
     <string name="error_message_no_internet">No internet connection</string>
     <string name="error_message_other">Oops. An error occurred.</string>
+    <string name="error_retry">Retry</string>
     <!--    region login -->
     <string name="login_title">Welcome!</string>
     <string name="login_error_blank_username">Username should not be empty and should contain some characters except whitespace characters</string>

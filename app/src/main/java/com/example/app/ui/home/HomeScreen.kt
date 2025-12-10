@@ -1,22 +1,30 @@
 package com.example.app.ui.home
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.app.ui.component.ErrorUi
+import com.example.app.ui.component.Loading
 import com.example.app.ui.home.component.HomeTopBar
+import com.example.app.ui.home.component.TasksList
+import com.example.app.ui.model.Loadable
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun HomeScreen() {
   val viewModel: HomeViewModel = hiltViewModel()
 
-  HomeUi(onEvent = viewModel::onEvent)
+  HomeUi(
+    uiState = viewModel.uiState(),
+    onEvent = viewModel::onEvent,
+  )
 }
 
 @Composable
-fun HomeUi(onEvent: (HomeEvent) -> Unit) {
+fun HomeUi(
+  uiState: HomeState,
+  onEvent: (HomeEvent) -> Unit,
+) {
   Scaffold(
     topBar = {
       HomeTopBar(
@@ -29,10 +37,24 @@ fun HomeUi(onEvent: (HomeEvent) -> Unit) {
       )
     },
     content = { paddingValues ->
-      LazyColumn(
-        modifier = Modifier.padding(paddingValues)
-      ) {
-        // TODO
+      when (uiState) {
+        is HomeState.Content -> when (uiState.tasks) {
+          is Loadable.Content<ImmutableList<TaskUi>> -> TasksList(
+            tasks = uiState.tasks.value,
+            paddingValues = paddingValues,
+          )
+
+          Loadable.Loading -> Loading(paddingValues = paddingValues)
+        }
+
+        is HomeState.Error -> ErrorUi(
+          message = uiState.message,
+          paddingValues = paddingValues,
+          retryLoading = uiState.retryLoading,
+          onRetry = {
+            onEvent(HomeEvent.RetryClick)
+          }
+        )
       }
     }
   )

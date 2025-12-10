@@ -4,6 +4,7 @@ import androidx.compose.ui.graphics.Color
 import arrow.core.Either
 import com.example.app.data.ErrorResponse
 import com.example.app.domain.model.Task
+import com.example.app.ui.model.Loadable
 import com.example.app.utils.ErrorUiMapper
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
@@ -17,18 +18,20 @@ class HomeUiMapper @Inject constructor(
         HomeState.Error(errorUiMapper.map(error))
       },
       ifRight = { tasks ->
-        HomeState.Success(
-          tasks = tasks.map { task ->
-            TaskUi(
-              id = task.id,
-              title = task.title,
-              description = task.description,
-              color = mapColorHex(task.colorHex).getOrNull()
-            )
-          }.toImmutableList()
+        HomeState.Content(
+          tasks = Loadable.Content(
+            tasks.map { task ->
+              TaskUi(
+                id = task.id,
+                title = task.title,
+                description = task.description,
+                color = mapColorHex(task.colorHex).getOrNull()
+              )
+            }.toImmutableList()
+          )
         )
       }
-    ) ?: HomeState.Loading
+    ) ?: HomeState.Content(tasks = Loadable.Loading)
   }
 }
 
