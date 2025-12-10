@@ -1,6 +1,7 @@
 package com.example.app.ui.home
 
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.toColorInt
 import arrow.core.Either
 import com.example.app.data.ErrorResponse
 import com.example.app.domain.model.Task
@@ -37,6 +38,6 @@ class HomeUiMapper @Inject constructor(
 
 private fun mapColorHex(color: String): Either<Throwable, Color> {
   return Either.catch {
-    Color(color.removePrefix("#").toLong(16))
+    Color(color.toColorInt())
   }
 }
