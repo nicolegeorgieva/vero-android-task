@@ -1,6 +1,7 @@
 package com.example.app.ui.component
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,22 +19,21 @@ import com.example.app.R
 fun ErrorUi(
   message: String,
   paddingValues: PaddingValues,
-  retryLoading: Boolean,
   modifier: Modifier = Modifier,
   onRetry: () -> Unit,
 ) {
-  Box(
+  Column(
     modifier = modifier
       .fillMaxSize()
       .padding(paddingValues)
       .padding(16.dp),
-    contentAlignment = Alignment.Center,
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     Text(text = message)
     Spacer(Modifier.height(24.dp))
     CtaButton(
       text = stringResource(R.string.error_retry),
-      loading = retryLoading,
       onClick = onRetry,
     )
   }

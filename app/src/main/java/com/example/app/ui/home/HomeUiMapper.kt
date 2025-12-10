@@ -15,7 +15,7 @@ class HomeUiMapper @Inject constructor(
   fun map(tasksResponse: Either<ErrorResponse, List<Task>>?): HomeState {
     return tasksResponse?.fold(
       ifLeft = { error ->
-        HomeState.Error(errorUiMapper.map(error))
+        HomeState.Error(message = errorUiMapper.map(error))
       },
       ifRight = { tasks ->
         HomeState.Content(

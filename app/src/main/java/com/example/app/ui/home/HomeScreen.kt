@@ -50,7 +50,6 @@ fun HomeUi(
         is HomeState.Error -> ErrorUi(
           message = uiState.message,
           paddingValues = paddingValues,
-          retryLoading = uiState.retryLoading,
           onRetry = {
             onEvent(HomeEvent.RetryClick)
           }

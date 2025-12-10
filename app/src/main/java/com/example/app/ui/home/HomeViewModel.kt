@@ -46,7 +46,10 @@ class HomeViewModel @Inject constructor(
   }
 
   private fun handleRetryClick() {
-    // TODO
+    viewModelScope.launch {
+      tasksState = null
+      tasksState = taskRepository.getTasks()
+    }
   }
 
   private fun handleSettingsClick() {

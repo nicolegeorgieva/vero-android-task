@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 @Composable
 fun CtaButton(
   text: String,
-  loading: Boolean,
   modifier: Modifier = Modifier,
+  loading: Boolean = false,
   onClick: () -> Unit,
 ) {
   Button(
