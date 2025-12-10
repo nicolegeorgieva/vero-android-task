@@ -19,5 +19,8 @@ fun Navigation(navController: NavHostController) {
     composable<Screen.Home> {
       HomeScreen()
     }
+    composable<Screen.Settings> {
+      HomeScreen()
+    }
   }
 }

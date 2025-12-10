@@ -23,7 +23,9 @@ fun HomeUi(onEvent: (HomeEvent) -> Unit) {
         searchText = "TODO",
         onTextChange = {},
         onQrIconClick = {},
-        onSettingsClick = {}
+        onSettingsClick = {
+          onEvent(HomeEvent.SettingsClick)
+        }
       )
     },
     content = { paddingValues ->

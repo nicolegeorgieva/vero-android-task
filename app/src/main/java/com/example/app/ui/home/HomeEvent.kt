@@ -1,3 +1,5 @@
 package com.example.app.ui.home
 
-sealed interface HomeEvent
+sealed interface HomeEvent {
+  data object SettingsClick : HomeEvent
+}
