@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.app.ui.home.HomeScreen
 import com.example.app.ui.login.LoginScreen
+import com.example.app.ui.settings.SettingsScreen
 
 @Composable
 fun Navigation(navController: NavHostController) {
@@ -20,7 +21,7 @@ fun Navigation(navController: NavHostController) {
       HomeScreen()
     }
     composable<Screen.Settings> {
-      HomeScreen()
+      SettingsScreen()
     }
   }
 }

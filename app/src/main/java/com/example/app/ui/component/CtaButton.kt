@@ -1,15 +1,14 @@
-package com.example.app.ui.login.component
+package com.example.app.ui.component
 
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.example.app.R
 
 @Composable
-fun LoginCtaButton(
+fun CtaButton(
+  text: String,
   loading: Boolean,
   modifier: Modifier = Modifier,
   onClick: () -> Unit,
@@ -22,7 +21,7 @@ fun LoginCtaButton(
     if (loading) {
       CircularProgressIndicator()
     } else {
-      Text(stringResource(R.string.login_cta_button))
+      Text(text = text)
     }
   }
 }

@@ -11,4 +11,8 @@
     <string name="login_password_field_title">Password</string>
     <string name="login_cta_button">Log in</string>
     <!--    endregion -->
+    <!--    region settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_logout_button">Log out</string>
+    <!--    endregion -->
 </resources>

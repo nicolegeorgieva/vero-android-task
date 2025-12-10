@@ -40,6 +40,7 @@ android {
   kotlin {
     compilerOptions {
       optIn.add("kotlin.time.ExperimentalTime")
+      optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
     }
   }
 }

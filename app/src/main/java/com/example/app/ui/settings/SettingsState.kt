@@ -1,3 +1,8 @@
 package com.example.app.ui.settings
 
-class SettingsState()
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class SettingsState(
+  val logoutButtonLoading: Boolean,
+)
