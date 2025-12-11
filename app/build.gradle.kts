@@ -41,6 +41,7 @@ android {
     compilerOptions {
       optIn.add("kotlin.time.ExperimentalTime")
       optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
+      optIn.add("com.google.accompanist.permissions.ExperimentalPermissionsApi")
     }
   }
 }
@@ -62,7 +63,8 @@ dependencies {
   implementation(libs.coil)
   implementation(libs.coil.http)
   implementation(libs.dataStore)
-  implementation(libs.qr.code.scan)
+  implementation(libs.barcode.scanning)
+  implementation(libs.accompanist.permissions)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)
