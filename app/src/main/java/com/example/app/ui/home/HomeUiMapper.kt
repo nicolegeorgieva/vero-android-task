@@ -33,14 +33,8 @@ class HomeUiMapper @Inject constructor(
             searchUseCase.search(
               tasks = tasks,
               query = searchQuery,
-            ).map { task ->
-              TaskUi(
-                id = task.id,
-                title = task.title,
-                description = task.description,
-                color = mapColorHex(task.colorHex).getOrNull()
-              )
-            }.toImmutableList()
+            ).map(::taskToUi)
+              .toImmutableList()
           ),
           isRefreshing = isRefreshing,
           searchQuery = searchQuery,
@@ -52,10 +46,19 @@ class HomeUiMapper @Inject constructor(
       searchQuery = searchQuery,
     )
   }
-}
 
-private fun mapColorHex(color: String): Either<Throwable, Color> {
-  return Either.catch {
-    Color(color.toColorInt())
+  private fun taskToUi(task: Task): TaskUi {
+    return TaskUi(
+      id = task.id,
+      title = task.title,
+      description = task.description,
+      color = mapColorHex(task.colorHex).getOrNull()
+    )
+  }
+
+  private fun mapColorHex(color: String): Either<Throwable, Color> {
+    return Either.catch {
+      Color(color.toColorInt())
+    }
   }
 }
