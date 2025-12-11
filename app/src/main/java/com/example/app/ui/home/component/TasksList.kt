@@ -85,12 +85,14 @@ fun TaskCard(
         fontWeight = FontWeight.Bold,
         style = MaterialTheme.typography.bodyLarge,
       )
-      Spacer(Modifier.height(12.dp))
-      Text(
-        text = task.description,
-        maxLines = 6,
-        overflow = TextOverflow.Ellipsis,
-      )
+      if (task.description.isNotBlank()) {
+        Spacer(Modifier.height(12.dp))
+        Text(
+          text = task.description,
+          maxLines = 6,
+          overflow = TextOverflow.Ellipsis,
+        )
+      }
     }
   }
 }
