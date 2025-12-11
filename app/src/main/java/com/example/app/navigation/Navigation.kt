@@ -9,10 +9,13 @@ import com.example.app.ui.login.LoginScreen
 import com.example.app.ui.settings.SettingsScreen
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(
+  navController: NavHostController,
+  startDestination: Screen,
+) {
   NavHost(
     navController = navController,
-    startDestination = Screen.Login
+    startDestination = startDestination,
   ) {
     composable<Screen.Login> {
       LoginScreen()
