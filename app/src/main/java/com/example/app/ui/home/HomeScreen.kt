@@ -28,7 +28,7 @@ fun HomeUi(
   Scaffold(
     topBar = {
       HomeTopBar(
-        searchText = uiState.searchText,
+        searchText = uiState.searchQuery,
         onTextChange = {
           onEvent(HomeEvent.SearchTextChange(it))
         },

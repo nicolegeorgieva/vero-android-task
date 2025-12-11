@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
     }
 
     return homeUiMapper.map(
-      searchText = searchText,
+      searchQuery = searchText,
       tasksResponse = tasksState,
       isRefreshing = tasksRefreshing,
     )
