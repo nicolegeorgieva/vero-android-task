@@ -62,6 +62,7 @@ dependencies {
   implementation(libs.coil)
   implementation(libs.coil.http)
   implementation(libs.dataStore)
+  implementation(libs.qr.code.scan)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
   androidTestImplementation(libs.androidx.espresso.core)

@@ -38,6 +38,7 @@ arrow-core = { module = "io.arrow-kt:arrow-core", version = "2.1.2" }
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-http = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 dataStore = { module = "androidx.datastore:datastore-preferences", version = "1.2.0" }
+qr-code-scan = { module = "com.google.mlkit:barcode-scanning", version = "17.3.0" }
 
 # Hilt
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
