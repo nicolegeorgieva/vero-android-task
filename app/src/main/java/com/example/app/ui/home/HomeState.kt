@@ -7,12 +7,18 @@ import kotlinx.collections.immutable.ImmutableList
 
 @Immutable
 sealed interface HomeState {
+  val searchText: String
+
   data class Content(
+    override val searchText: String,
     val tasks: Loadable<ImmutableList<TaskUi>>,
     val isRefreshing: Boolean,
   ) : HomeState
 
-  data class Error(val message: String) : HomeState
+  data class Error(
+    override val searchText: String,
+    val message: String
+  ) : HomeState
 }
 
 @Immutable

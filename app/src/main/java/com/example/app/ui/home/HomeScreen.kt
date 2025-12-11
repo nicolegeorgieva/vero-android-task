@@ -28,12 +28,16 @@ fun HomeUi(
   Scaffold(
     topBar = {
       HomeTopBar(
-        searchText = "TODO",
-        onTextChange = {},
-        onQrIconClick = {},
+        searchText = uiState.searchText,
+        onTextChange = {
+          onEvent(HomeEvent.SearchTextChange(it))
+        },
+        onQrIconClick = {
+          onEvent(HomeEvent.ScanQrCodeClick)
+        },
         onSettingsClick = {
           onEvent(HomeEvent.SettingsClick)
-        }
+        },
       )
     },
     content = { paddingValues ->

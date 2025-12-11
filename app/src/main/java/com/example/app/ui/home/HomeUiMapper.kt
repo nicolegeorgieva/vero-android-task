@@ -14,17 +14,26 @@ class HomeUiMapper @Inject constructor(
   private val errorUiMapper: ErrorUiMapper,
 ) {
   fun map(
+    searchText: String,
     tasksResponse: Either<ErrorResponse, List<Task>>?,
     isRefreshing: Boolean,
   ): HomeState {
     return tasksResponse?.fold(
       ifLeft = { error ->
-        HomeState.Error(message = errorUiMapper.map(error))
+        HomeState.Error(
+          message = errorUiMapper.map(error),
+          searchText = searchText,
+        )
       },
       ifRight = { tasks ->
         HomeState.Content(
           tasks = Loadable.Content(
-            tasks.map { task ->
+            tasks.filter { task ->
+              task.id.contains(other = searchText, ignoreCase = true) ||
+                  task.title.contains(other = searchText, ignoreCase = true) ||
+                  task.description.contains(other = searchText, ignoreCase = true) ||
+                  task.colorHex.contains(other = searchText, ignoreCase = true)
+            }.map { task ->
               TaskUi(
                 id = task.id,
                 title = task.title,
@@ -34,11 +43,13 @@ class HomeUiMapper @Inject constructor(
             }.toImmutableList()
           ),
           isRefreshing = isRefreshing,
+          searchText = searchText,
         )
       }
     ) ?: HomeState.Content(
       tasks = Loadable.Loading,
       isRefreshing = isRefreshing,
+      searchText = searchText,
     )
   }
 }

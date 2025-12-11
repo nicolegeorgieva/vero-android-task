@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -37,6 +38,8 @@ fun LoginInputField(
   onValueChange: (String) -> Unit,
   onDone: (KeyboardActionScope.() -> Unit)? = null,
 ) {
+  val focusManager = LocalFocusManager.current
+
   OutlinedTextField(
     modifier = modifier,
     value = input.value,
@@ -50,7 +53,12 @@ fun LoginInputField(
       imeAction = if (input is LoginInputType.Username) ImeAction.Next else ImeAction.Done
     ),
     keyboardActions = if (onDone != null && input is LoginInputType.Password) {
-      KeyboardActions(onDone = onDone)
+      KeyboardActions(
+        onDone = {
+          focusManager.clearFocus()
+          onDone()
+        }
+      )
     } else {
       KeyboardActions.Default
     },

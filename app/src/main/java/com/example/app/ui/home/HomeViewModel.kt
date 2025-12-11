@@ -23,6 +23,7 @@ class HomeViewModel @Inject constructor(
   private val homeUiMapper: HomeUiMapper,
   private val navigator: Navigator,
 ) : ComposeViewModel<HomeState, HomeEvent>() {
+  private var searchText by mutableStateOf("")
   private var tasksState by mutableStateOf<Either<ErrorResponse, List<Task>>?>(null)
   private var tasksRefreshing by mutableStateOf(false)
 
@@ -33,6 +34,7 @@ class HomeViewModel @Inject constructor(
     }
 
     return homeUiMapper.map(
+      searchText = searchText,
       tasksResponse = tasksState,
       isRefreshing = tasksRefreshing,
     )
@@ -44,10 +46,20 @@ class HomeViewModel @Inject constructor(
 
   override fun onEvent(event: HomeEvent) {
     when (event) {
+      is HomeEvent.SearchTextChange -> handleSearchTextChange(event)
+      HomeEvent.ScanQrCodeClick -> scanQrCodeClick()
       HomeEvent.SettingsClick -> handleSettingsClick()
       HomeEvent.RefreshTasks -> handleRefreshTasks()
       HomeEvent.RetryClick -> handleRetryClick()
     }
+  }
+
+  private fun handleSearchTextChange(event: HomeEvent.SearchTextChange) {
+    searchText = event.text
+  }
+
+  private fun scanQrCodeClick() {
+    // TODO
   }
 
   private fun handleRefreshTasks() {
