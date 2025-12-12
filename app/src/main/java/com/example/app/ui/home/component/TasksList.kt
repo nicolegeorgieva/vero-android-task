@@ -85,7 +85,7 @@ fun TaskCard(
         fontWeight = FontWeight.Bold,
         style = MaterialTheme.typography.bodyLarge,
       )
-      if (task.description.isNotBlank()) {
+      if (task.description != null) {
         Spacer(Modifier.height(12.dp))
         Text(
           text = task.description,

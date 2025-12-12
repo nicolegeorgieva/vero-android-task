@@ -52,13 +52,13 @@ class HomeUiMapper @Inject constructor(
       id = task.id,
       title = task.title,
       description = task.description,
-      color = mapColorHex(task.colorHex).getOrNull()
+      color = task.colorHex?.mapColorHex()?.getOrNull(),
     )
   }
 
-  private fun mapColorHex(color: String): Either<Throwable, Color> {
+  private fun String.mapColorHex(): Either<Throwable, Color> {
     return Either.catch {
-      Color(color.toColorInt())
+      Color(this.toColorInt())
     }
   }
 }

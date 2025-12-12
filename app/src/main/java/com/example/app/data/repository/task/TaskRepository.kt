@@ -19,8 +19,12 @@ class TaskRepository @Inject constructor(
           Task(
             id = taskDto.task,
             title = taskDto.title,
-            description = taskDto.description,
-            colorHex = taskDto.colorCode,
+            description = taskDto.description.takeIf {
+              it.isNotBlank()
+            },
+            colorHex = taskDto.colorCode.takeIf {
+              it.isNotBlank()
+            },
           )
         }
       }

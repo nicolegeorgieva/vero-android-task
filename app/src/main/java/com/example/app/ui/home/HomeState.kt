@@ -29,6 +29,6 @@ sealed interface HomeState {
 data class TaskUi(
   val id: String,
   val title: String,
-  val description: String,
+  val description: String?,
   val color: Color?,
 )

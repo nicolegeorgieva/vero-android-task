@@ -9,10 +9,14 @@ class SearchUseCase @Inject constructor() {
     query: String,
   ): List<Task> {
     return tasks.filter { task ->
-      task.id.contains(other = query, ignoreCase = true) ||
-          task.title.contains(other = query, ignoreCase = true) ||
-          task.description.contains(other = query, ignoreCase = true) ||
-          task.colorHex.contains(other = query, ignoreCase = true)
+      task.id.matchesQuery(query) ||
+          task.title.matchesQuery(query) ||
+          task.description.matchesQuery(query) ||
+          task.colorHex.matchesQuery(query)
     }
+  }
+
+  private fun String?.matchesQuery(query: String): Boolean {
+    return this?.contains(other = query, ignoreCase = true) ?: false
   }
 }
