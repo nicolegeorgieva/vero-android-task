@@ -84,6 +84,12 @@ dependencies {
   implementation(libs.hilt.navigation.compose)
   // endregion
 
+  // region Room
+  implementation(libs.room.runtime)
+  ksp(libs.room.compiler)
+  implementation(libs.room.ktx)
+  // endregion
+
   // region KotlinX Serialization
   implementation(libs.kotlinx.serialization.json)
   // endregion
