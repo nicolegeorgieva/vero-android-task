@@ -6,8 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.app.ui.component.ErrorUi
 import com.example.app.ui.component.Loading
 import com.example.app.ui.home.component.HomeTopBar
-import com.example.app.ui.home.component.QrCodeScannerUi
 import com.example.app.ui.home.component.TasksList
+import com.example.app.ui.home.qrcodescanner.QrCodeScannerUi
 import com.example.app.ui.model.Loadable
 import kotlinx.collections.immutable.ImmutableList
 

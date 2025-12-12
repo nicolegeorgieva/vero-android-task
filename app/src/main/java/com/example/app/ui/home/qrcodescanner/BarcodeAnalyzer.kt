@@ -1,4 +1,4 @@
-package com.example.app.qrcodescanner
+package com.example.app.ui.home.qrcodescanner
 
 import androidx.annotation.OptIn
 import androidx.camera.core.ExperimentalGetImage

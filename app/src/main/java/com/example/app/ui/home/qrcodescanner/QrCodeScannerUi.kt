@@ -1,4 +1,4 @@
-package com.example.app.ui.home.component
+package com.example.app.ui.home.qrcodescanner
 
 import android.Manifest
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.app.R
-import com.example.app.qrcodescanner.CameraPreview
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 

@@ -1,4 +1,4 @@
-package com.example.app.qrcodescanner
+package com.example.app.ui.home.qrcodescanner
 
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
