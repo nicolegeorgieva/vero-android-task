@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.app.ui.component.ErrorUi
 import com.example.app.ui.component.Loading
 import com.example.app.ui.home.component.HomeTopBar
+import com.example.app.ui.home.component.QrCodeScannerUi
 import com.example.app.ui.home.component.TasksList
 import com.example.app.ui.model.Loadable
 import kotlinx.collections.immutable.ImmutableList
@@ -27,18 +28,20 @@ fun HomeUi(
 ) {
   Scaffold(
     topBar = {
-      HomeTopBar(
-        searchText = uiState.searchQuery,
-        onTextChange = {
-          onEvent(HomeEvent.SearchTextChange(it))
-        },
-        onQrIconClick = {
-          onEvent(HomeEvent.ScanQrCodeClick)
-        },
-        onSettingsClick = {
-          onEvent(HomeEvent.SettingsClick)
-        },
-      )
+      if (uiState is HomeState.Searchable) {
+        HomeTopBar(
+          searchText = uiState.searchQuery,
+          onTextChange = {
+            onEvent(HomeEvent.SearchTextChange(it))
+          },
+          onQrIconClick = {
+            onEvent(HomeEvent.ScanQrCodeClick)
+          },
+          onSettingsClick = {
+            onEvent(HomeEvent.SettingsClick)
+          },
+        )
+      }
     },
     content = { paddingValues ->
       when (uiState) {
@@ -54,6 +57,12 @@ fun HomeUi(
 
           Loadable.Loading -> Loading(paddingValues = paddingValues)
         }
+
+        is HomeState.ScanQrCode -> QrCodeScannerUi(
+          onQrCodeScanned = {
+            onEvent(HomeEvent.ScanQrCode(it))
+          }
+        )
 
         is HomeState.Error -> ErrorUi(
           message = uiState.message,
