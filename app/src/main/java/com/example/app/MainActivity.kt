@@ -1,6 +1,5 @@
 package com.example.app
 
-import android.Manifest
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -25,8 +24,6 @@ import com.example.app.navigation.NavigationEvent
 import com.example.app.navigation.Navigator
 import com.example.app.navigation.Screen
 import com.example.app.theme.MyAppTheme
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -77,15 +74,6 @@ class MainActivity : ComponentActivity() {
               navController = navController,
               startDestination = it,
             )
-          }
-
-          val cameraPermissionState =
-            rememberPermissionState(permission = Manifest.permission.CAMERA)
-
-          LaunchedEffect(Unit) {
-            if (!cameraPermissionState.status.isGranted) {
-              cameraPermissionState.launchPermissionRequest()
-            }
           }
         }
       }

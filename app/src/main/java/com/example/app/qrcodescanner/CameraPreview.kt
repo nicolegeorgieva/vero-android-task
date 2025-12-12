@@ -5,11 +5,13 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -22,6 +24,7 @@ fun CameraPreview(onQrCodeScanned: (String) -> Unit) {
   var preview by remember { mutableStateOf<Preview?>(null) }
 
   AndroidView(
+    modifier = Modifier.fillMaxSize(),
     factory = { ctx ->
       PreviewView(ctx).apply {
         scaleType = PreviewView.ScaleType.FILL_CENTER

@@ -12,6 +12,10 @@
     <string name="login_password_field_title">Password</string>
     <string name="login_cta_button">Log in</string>
     <!--    endregion -->
+    <!--    region home -->
+    <string name="home_allow_camera_message">You should allow camera to proceed with QR code scanning</string>
+    <string name="home_allow_camera_button">Allow camera</string>
+    <!--    endregion -->
     <!--    region settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_logout_button">Log out</string>
