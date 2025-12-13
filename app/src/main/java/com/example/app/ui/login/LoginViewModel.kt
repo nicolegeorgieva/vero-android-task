@@ -56,11 +56,13 @@ class LoginViewModel @Inject constructor(
   private fun handleTypeUsername(event: LoginEvent.ChangeUsername) {
     username = event.username
     usernameErrorMessage = null
+    serverErrorMessage = null
   }
 
   private fun handleTypePassword(event: LoginEvent.ChangePassword) {
     password = event.password
     passwordErrorMessage = null
+    serverErrorMessage = null
   }
 
   private fun handleLoginClick() {
