@@ -1,7 +1,6 @@
 package com.example.app.data.database.task
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 
@@ -13,6 +12,6 @@ interface TaskDao {
   @Upsert
   suspend fun saveTasks(task: List<TaskEntity>)
 
-  @Delete
+  @Query("DELETE FROM taskentity")
   suspend fun deleteTasks()
 }

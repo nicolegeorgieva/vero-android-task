@@ -4,6 +4,7 @@ plugins {
   alias(libs.plugins.devtools.ksp)
   alias(libs.plugins.kotlin.compose)
   alias(libs.plugins.dagger.hilt)
+  alias(libs.plugins.room)
   alias(libs.plugins.kotlinx.serialization)
 }
 
@@ -43,6 +44,9 @@ android {
       optIn.add("androidx.compose.material3.ExperimentalMaterial3Api")
       optIn.add("com.google.accompanist.permissions.ExperimentalPermissionsApi")
     }
+  }
+  room {
+    schemaDirectory("$projectDir/schemas")
   }
 }
 
