@@ -24,6 +24,8 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.AttributeKey
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.contextual
@@ -113,6 +115,12 @@ object AppModule {
     database: MyAppDatabase,
   ): TaskDao {
     return database.taskDao()
+  }
+
+  @Singleton
+  @Provides
+  fun provideCoroutineScope(): CoroutineScope {
+    return CoroutineScope(SupervisorJob())
   }
 }
 

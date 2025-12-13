@@ -7,7 +7,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import javax.inject.Inject
 
-class TaskDataSource @Inject constructor(
+class TaskRemoteDataSource @Inject constructor(
   private val httpClient: HttpClient,
 ) {
   suspend fun fetchTasks(): Either<Throwable, List<TaskDto>> {

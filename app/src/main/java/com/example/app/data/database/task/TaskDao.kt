@@ -2,17 +2,18 @@ package com.example.app.data.database.task
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Upsert
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
   @Query("SELECT * FROM taskentity")
-  fun getAllTasks(): List<TaskEntity>
+  fun getTasks(): Flow<List<TaskEntity>>
 
-  @Insert
-  fun insertAllTasks(task: List<TaskEntity>)
+  @Upsert
+  suspend fun saveTasks(task: List<TaskEntity>)
 
   @Delete
-  fun deleteAllTasks()
+  suspend fun deleteTasks()
 }
