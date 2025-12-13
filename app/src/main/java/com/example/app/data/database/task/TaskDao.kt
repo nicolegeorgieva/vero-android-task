@@ -4,12 +4,11 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TaskDao {
   @Query("SELECT * FROM taskentity")
-  fun getTasks(): Flow<List<TaskEntity>>
+  suspend fun getTasks(): List<TaskEntity>
 
   @Upsert
   suspend fun saveTasks(task: List<TaskEntity>)

@@ -24,11 +24,10 @@ class HomeViewModel @Inject constructor(
   private var qrScannerVisible by mutableStateOf(false)
   private var searchQuery by mutableStateOf("")
   private var tasksRefreshing by mutableStateOf(false)
-  private var tasksLoading by mutableStateOf(false)
 
   @Composable
   override fun uiState(): HomeState {
-    val tasksRes by remember { taskRepository.getTasks() }
+    val tasksRes by remember { taskRepository.getTasks(viewModelScope) }
       .collectAsState(initial = null)
 
     if (qrScannerVisible) {
@@ -37,7 +36,7 @@ class HomeViewModel @Inject constructor(
 
     return homeUiMapper.map(
       searchQuery = searchQuery,
-      tasksResponse = tasksRes.takeIf { !tasksLoading },
+      tasksResponse = tasksRes,
       isRefreshing = tasksRefreshing,
     )
   }
@@ -69,16 +68,14 @@ class HomeViewModel @Inject constructor(
   private fun handleRefreshTasks() {
     viewModelScope.launch {
       tasksRefreshing = true
-      tasksState = taskRepository.getTasks()
+      taskRepository.refresh(showLoading = false)
       tasksRefreshing = false
     }
   }
 
   private fun handleRetryClick() {
     viewModelScope.launch {
-      tasksLoading = true
-      taskRepository.getTasks()
-      tasksLoading = false
+      taskRepository.refresh(showLoading = true)
     }
   }
 
