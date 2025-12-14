@@ -6,12 +6,12 @@ import androidx.room.Upsert
 
 @Dao
 interface TaskDao {
-  @Query("SELECT * FROM taskentity")
+  @Query("SELECT * FROM tasks")
   suspend fun getTasks(): List<TaskEntity>
 
   @Upsert
   suspend fun saveTasks(task: List<TaskEntity>)
 
-  @Query("DELETE FROM taskentity")
+  @Query("DELETE FROM tasks")
   suspend fun deleteTasks()
 }
