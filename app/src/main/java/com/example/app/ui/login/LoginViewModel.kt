@@ -115,7 +115,7 @@ class LoginViewModel @Inject constructor(
         is LoginError.Other -> errorUiMapper.map(error.error)
       }
     }.onRight {
-      navigator.navigateTo(Screen.Home)
+      navigator.replace(listOf(Screen.Home))
     }
   }
 }

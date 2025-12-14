@@ -1,18 +1,29 @@
 package com.example.app.navigation
 
-import kotlinx.coroutines.flow.MutableSharedFlow
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.Snapshot
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class Navigator @Inject constructor() {
-  val navigationEvents = MutableSharedFlow<NavigationEvent>()
+  val backStack: SnapshotStateList<Screen> = mutableStateListOf(Screen.Login)
 
-  suspend fun navigateTo(screen: Screen) {
-    navigationEvents.emit(NavigationEvent.GoTo(screen))
+  fun navigateTo(screen: Screen) {
+    backStack.add(screen)
   }
 
-  suspend fun back() {
-    navigationEvents.emit(NavigationEvent.Back)
+  fun back() {
+    if (backStack.size > 1) {
+      backStack.removeLastOrNull()
+    }
+  }
+
+  fun replace(screens: List<Screen>) {
+    Snapshot.withMutableSnapshot {
+      backStack.clear()
+      backStack.addAll(screens)
+    }
   }
 }

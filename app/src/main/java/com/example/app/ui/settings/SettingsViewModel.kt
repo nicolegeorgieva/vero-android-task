@@ -44,7 +44,7 @@ class SettingsViewModel @Inject constructor(
     viewModelScope.launch {
       logoutButtonLoading = true
       sessionUseCase.logout()
-      navigator.navigateTo(Screen.Login)
+      navigator.replace(listOf(Screen.Login))
       logoutButtonLoading = false
     }
   }

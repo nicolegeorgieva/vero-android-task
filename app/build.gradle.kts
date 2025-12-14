@@ -57,7 +57,6 @@ dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.compose.runtime)
   implementation(libs.compose.viewmodel)
-  implementation(libs.compose.navigation)
   implementation(libs.androidx.ui)
   implementation(libs.androidx.ui.graphics)
   implementation(libs.androidx.ui.tooling.preview)

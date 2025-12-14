@@ -17,15 +17,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
 import com.example.app.domain.SessionUseCase
 import com.example.app.navigation.Navigation
-import com.example.app.navigation.NavigationEvent
 import com.example.app.navigation.Navigator
 import com.example.app.navigation.Screen
 import com.example.app.theme.MyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -48,32 +45,20 @@ class MainActivity : ComponentActivity() {
             .padding(WindowInsets.safeDrawing.asPaddingValues()),
           color = MaterialTheme.colorScheme.background,
         ) {
-          val navController = rememberNavController()
+          var navigationReady by remember { mutableStateOf(false) }
 
           LaunchedEffect(Unit) {
-            navigator.navigationEvents.collectLatest { event ->
-              when (event) {
-                is NavigationEvent.GoTo -> navController.navigate(event.screen)
-                NavigationEvent.Back -> navController.popBackStack()
-              }
-            }
-          }
-
-          var startDestination by remember { mutableStateOf<Screen?>(null) }
-
-          LaunchedEffect(Unit) {
-            startDestination = if (sessionUseCase.getSession() != null) {
+            val startDestination = if (sessionUseCase.getSession() != null) {
               Screen.Home
             } else {
               Screen.Login
             }
+            navigator.replace(listOf(startDestination))
+            navigationReady = true
           }
 
-          startDestination?.let {
-            Navigation(
-              navController = navController,
-              startDestination = it,
-            )
+          if (navigationReady) {
+            Navigation(navigator = navigator)
           }
         }
       }
