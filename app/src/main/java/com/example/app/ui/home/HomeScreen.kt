@@ -61,6 +61,9 @@ fun HomeUi(
         is HomeState.ScanQrCode -> QrCodeScannerUi(
           onQrCodeScanned = {
             onEvent(HomeEvent.ScanQrCode(it))
+          },
+          onQrCodeScannerClosed = {
+            onEvent(HomeEvent.CloseQrCodeScanner)
           }
         )
 

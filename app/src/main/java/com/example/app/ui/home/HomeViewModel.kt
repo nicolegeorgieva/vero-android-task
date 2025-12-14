@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
   private val homeUiMapper: HomeUiMapper,
   private val navigator: Navigator,
 ) : ComposeViewModel<HomeState, HomeEvent>() {
-  private var qrScannerVisible by mutableStateOf(false)
+  private var qrCodeScannerVisible by mutableStateOf(false)
   private var searchQuery by mutableStateOf("")
   private var tasksRefreshing by mutableStateOf(false)
 
@@ -30,7 +30,7 @@ class HomeViewModel @Inject constructor(
     val tasksRes by remember { taskRepository.getTasks(viewModelScope) }
       .collectAsState(initial = null)
 
-    if (qrScannerVisible) {
+    if (qrCodeScannerVisible) {
       return HomeState.ScanQrCode
     }
 
@@ -49,6 +49,7 @@ class HomeViewModel @Inject constructor(
       HomeEvent.SettingsClick -> handleSettingsClick()
       HomeEvent.RefreshTasks -> handleRefreshTasks()
       HomeEvent.RetryClick -> handleRetryClick()
+      HomeEvent.CloseQrCodeScanner -> handleCloseQrCodeScanner()
     }
   }
 
@@ -57,12 +58,16 @@ class HomeViewModel @Inject constructor(
   }
 
   private fun scanQrCodeClick() {
-    qrScannerVisible = true
+    qrCodeScannerVisible = true
   }
 
   private fun handleScanQrCode(event: HomeEvent.ScanQrCode) {
-    qrScannerVisible = false
+    qrCodeScannerVisible = false
     searchQuery = event.scannedText
+  }
+
+  private fun handleCloseQrCodeScanner() {
+    qrCodeScannerVisible = false
   }
 
   private fun handleRefreshTasks() {

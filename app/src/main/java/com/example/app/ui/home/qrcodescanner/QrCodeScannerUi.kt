@@ -1,6 +1,7 @@
 package com.example.app.ui.home.qrcodescanner
 
 import android.Manifest
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +22,12 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
-fun QrCodeScannerUi(onQrCodeScanned: (String) -> Unit) {
+fun QrCodeScannerUi(
+  onQrCodeScanned: (String) -> Unit,
+  onQrCodeScannerClosed: () -> Unit,
+) {
+  BackHandler(onBack = onQrCodeScannerClosed)
+
   val cameraPermissionState =
     rememberPermissionState(permission = Manifest.permission.CAMERA)
 
