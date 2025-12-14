@@ -1,6 +1,7 @@
 package com.example.app.domain
 
 import arrow.core.Either
+import com.example.app.data.datasource.task.TaskLocalDataSource
 import com.example.app.data.datastore.SessionStorage
 import com.example.app.data.repository.login.LoginError
 import com.example.app.data.repository.login.LoginRepository
@@ -10,6 +11,7 @@ import javax.inject.Inject
 class SessionUseCase @Inject constructor(
   private val loginRepository: LoginRepository,
   private val sessionStorage: SessionStorage,
+  private val taskDataSource: TaskLocalDataSource,
 ) {
   suspend fun getSession(): Session? {
     return sessionStorage.get()
@@ -26,5 +28,6 @@ class SessionUseCase @Inject constructor(
 
   suspend fun logout() {
     sessionStorage.remove()
+    taskDataSource.deleteTasks()
   }
 }

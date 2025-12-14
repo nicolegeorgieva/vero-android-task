@@ -13,7 +13,7 @@ class TaskLocalDataSource @Inject constructor(private val dao: TaskDao) {
     dao.saveTasks(task)
   }
 
-  suspend fun deleteAllTasks() {
+  suspend fun deleteTasks() {
     dao.deleteTasks()
   }
 }
