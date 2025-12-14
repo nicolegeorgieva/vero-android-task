@@ -9,6 +9,7 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.10.1"
 composeBom = "2025.08.01"
+nav3Core = "1.0.0"
 hilt = "2.57.1"
 room = "2.8.4"
 ksp = "2.2.10-2.0.2"
@@ -41,6 +42,10 @@ coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-http = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }
 dataStore = { module = "androidx.datastore:datastore-preferences", version = "1.2.0" }
 barcode-scanning = { module = "com.google.mlkit:barcode-scanning", version = "17.3.0" }
+
+# Navigation
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
 
 # Hilt
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }

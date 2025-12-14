@@ -82,6 +82,11 @@ dependencies {
   debugImplementation(libs.androidx.ui.test.manifest)
   testImplementation(libs.mockk)
 
+  // region Navigation
+  implementation(libs.androidx.navigation3.ui)
+  implementation(libs.androidx.navigation3.runtime)
+  // endregion
+
   // region Hilt
   implementation(libs.hilt)
   ksp(libs.hilt.compiler)
