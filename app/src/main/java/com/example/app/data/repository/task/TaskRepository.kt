@@ -65,21 +65,21 @@ class TaskRepository @Inject constructor(
     return tasksFlow
   }
 
-  suspend fun refresh(showLoading: Boolean) {
+  suspend fun refresh(showLoading: Boolean): Either<ErrorResponse, List<Task>> {
     if (showLoading) {
       tasksFlow.emit(null)
     }
-    tasksFlow.emit(
-      remoteDataSource.fetchTasks()
-        .mapLeft(errorMapper::map)
-        .map { tasks ->
-          tasks.map(taskMapper::dtoToDomain)
-        }
-        .onRight { tasks ->
-          localDataSource.insertAllTasks(
-            tasks.map(taskMapper::domainToEntity)
-          )
-        }
-    )
+    val res = remoteDataSource.fetchTasks()
+      .mapLeft(errorMapper::map)
+      .map { tasks ->
+        tasks.map(taskMapper::dtoToDomain)
+      }
+      .onRight { tasks ->
+        localDataSource.insertAllTasks(
+          tasks.map(taskMapper::domainToEntity)
+        )
+      }
+    tasksFlow.emit(res)
+    return res
   }
 }
