@@ -81,6 +81,8 @@ dependencies {
   debugImplementation(libs.androidx.ui.tooling)
   debugImplementation(libs.androidx.ui.test.manifest)
   testImplementation(libs.mockk)
+  testImplementation(libs.strikt.core)
+  testImplementation(libs.strikt.arrow)
 
   // region Navigation
   implementation(libs.androidx.navigation3.ui)
