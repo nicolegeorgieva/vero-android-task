@@ -5,9 +5,11 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
+import com.example.app.MainEventBus
 import com.example.app.data.database.MyAppDatabase
 import com.example.app.data.database.task.TaskDao
 import com.example.app.data.datastore.SessionStorage
+import com.example.app.domain.LogoutUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -40,6 +42,8 @@ object AppModule {
   fun provideHttpClient(
     json: Json,
     sessionStorage: SessionStorage,
+    logoutUseCase: LogoutUseCase,
+    mainEventBus: MainEventBus,
   ): HttpClient {
     return HttpClient {
       install(ContentNegotiation) {
@@ -56,7 +60,7 @@ object AppModule {
         bearer {
           // If true, sends the auth bearer header without waiting for 401 response
           sendWithoutRequest { request ->
-            request.attributes.getOrNull(AuthenticatedAttributeKey) == true
+            request.isAuthenticated()
           }
           loadTokens {
             val session = sessionStorage.get()
@@ -71,6 +75,10 @@ object AppModule {
             }
           }
         }
+      }
+      install(KtorLogoutPlugin) {
+        this.logoutUseCase = logoutUseCase
+        this.mainEventBus = mainEventBus
       }
     }
   }
@@ -120,4 +128,8 @@ typealias LocalDataStore = DataStore<Preferences>
 
 fun HttpRequestBuilder.authenticated() {
   attributes[AuthenticatedAttributeKey] = true
+}
+
+fun HttpRequestBuilder.isAuthenticated(): Boolean {
+  return attributes.getOrNull(AuthenticatedAttributeKey) == true
 }

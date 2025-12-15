@@ -34,6 +34,9 @@ class MainActivity : ComponentActivity() {
   @Inject
   lateinit var sessionUseCase: SessionUseCase
 
+  @Inject
+  lateinit var mainEventBus: MainEventBus
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
@@ -55,6 +58,16 @@ class MainActivity : ComponentActivity() {
             }
             navigator.replace(listOf(startDestination))
             navigationReady = true
+          }
+
+          LaunchedEffect(Unit) {
+            mainEventBus.events.collect { event ->
+              when (event) {
+                MainEvent.InvalidSession -> {
+                  navigator.replace(listOf(Screen.Login))
+                }
+              }
+            }
           }
 
           if (navigationReady) {
