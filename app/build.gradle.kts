@@ -96,7 +96,6 @@ dependencies {
   // endregion
 
   // region Worker
-  implementation(libs.android.startup)
   implementation(libs.android.workmanager)
   // endregion
 
