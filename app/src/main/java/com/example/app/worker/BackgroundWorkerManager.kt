@@ -6,6 +6,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.example.app.utils.Logger
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Singleton
 @Singleton
 class BackgroundWorkerManager @Inject constructor(
   @param:ApplicationContext
-  private val context: Context
+  private val context: Context,
+  private val logger: Logger,
 ) {
   companion object {
     const val FETCH_WORKER = "fetch_data_worker"
@@ -29,7 +31,8 @@ class BackgroundWorkerManager @Inject constructor(
 
     val workRequest = PeriodicWorkRequestBuilder<FetchDataWorker>(
       60, TimeUnit.MINUTES
-    ).setInitialDelay(60, TimeUnit.MINUTES)
+    )
+      .setInitialDelay(60, TimeUnit.MINUTES)
       .setConstraints(constraints)
       .build()
 
@@ -38,9 +41,11 @@ class BackgroundWorkerManager @Inject constructor(
       ExistingPeriodicWorkPolicy.UPDATE,
       workRequest
     )
+    logger.debug(FetchDataWorker.TAG) { "Worker scheduled" }
   }
 
   fun cancel() {
     workManager.cancelUniqueWork(FETCH_WORKER)
+    logger.debug(FetchDataWorker.TAG) { "Worker canceled" }
   }
 }
