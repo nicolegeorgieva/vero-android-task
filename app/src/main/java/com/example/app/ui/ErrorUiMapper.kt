@@ -1,4 +1,4 @@
-package com.example.app.utils
+package com.example.app.ui
 
 import com.example.app.R
 import com.example.app.common.ResourceProvider

@@ -6,8 +6,8 @@ import arrow.core.Either
 import com.example.app.data.ErrorResponse
 import com.example.app.domain.SearchUseCase
 import com.example.app.domain.model.Task
+import com.example.app.ui.ErrorUiMapper
 import com.example.app.ui.model.Loadable
-import com.example.app.utils.ErrorUiMapper
 import kotlinx.collections.immutable.toImmutableList
 import javax.inject.Inject
 

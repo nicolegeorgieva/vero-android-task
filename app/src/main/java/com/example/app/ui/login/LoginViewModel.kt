@@ -14,7 +14,7 @@ import com.example.app.data.repository.login.LoginError
 import com.example.app.domain.SessionUseCase
 import com.example.app.navigation.Navigator
 import com.example.app.navigation.Screen
-import com.example.app.utils.ErrorUiMapper
+import com.example.app.ui.ErrorUiMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
