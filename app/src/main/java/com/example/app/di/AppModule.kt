@@ -113,7 +113,9 @@ object AppModule {
     return Room.databaseBuilder(
       context,
       MyAppDatabase::class.java, "my-app-database"
-    ).build()
+    )
+      .fallbackToDestructiveMigration(dropAllTables = true)
+      .build()
   }
 
   @Provides
