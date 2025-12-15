@@ -51,7 +51,12 @@ androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecy
 # Hilt
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-worker = { module = "androidx.hilt:hilt-work", version = "1.3.0" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.2.0" }
+
+# Worker
+android-startup = { module = "androidx.startup:startup-runtime", version = "1.2.0" }
+android-workmanager = { module = "androidx.work:work-runtime-ktx", version = "2.11.0" }
 
 # Room
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }

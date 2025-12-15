@@ -89,8 +89,14 @@ dependencies {
 
   // region Hilt
   implementation(libs.hilt)
+  implementation(libs.hilt.worker)
   ksp(libs.hilt.compiler)
   implementation(libs.hilt.navigation.compose)
+  // endregion
+
+  // region Worker
+  implementation(libs.android.startup)
+  implementation(libs.android.workmanager)
   // endregion
 
   // region Room
