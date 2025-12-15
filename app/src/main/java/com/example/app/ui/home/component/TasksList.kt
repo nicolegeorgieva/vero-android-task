@@ -15,6 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
@@ -61,6 +65,8 @@ fun TaskCard(
   modifier: Modifier = Modifier,
 ) {
   val backgroundColor = task.color
+  var cardExpanded by rememberSaveable { mutableStateOf(false) }
+
   ElevatedCard(
     modifier = modifier.fillMaxWidth(),
     colors = CardDefaults.elevatedCardColors(
@@ -70,7 +76,10 @@ fun TaskCard(
       } else {
         contentColorFor(Color.Unspecified)
       }
-    )
+    ),
+    onClick = {
+      cardExpanded = !cardExpanded
+    }
   ) {
     Column(
       modifier = Modifier.padding(12.dp)
@@ -89,7 +98,7 @@ fun TaskCard(
         Spacer(Modifier.height(12.dp))
         Text(
           text = task.description,
-          maxLines = 6,
+          maxLines = if (cardExpanded) Int.MAX_VALUE else 6,
           overflow = TextOverflow.Ellipsis,
         )
       }
