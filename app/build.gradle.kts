@@ -73,17 +73,6 @@ dependencies {
   implementation(libs.camera.camera2)
   implementation(libs.camera.lifecycle)
   implementation(libs.camera.view)
-  testImplementation(libs.junit)
-  androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.espresso.core)
-  androidTestImplementation(platform(libs.androidx.compose.bom))
-  androidTestImplementation(libs.androidx.ui.test.junit4)
-  debugImplementation(libs.androidx.ui.tooling)
-  debugImplementation(libs.androidx.ui.test.manifest)
-  testImplementation(libs.kotlinx.coroutines.test)
-  testImplementation(libs.mockk)
-  testImplementation(libs.strikt.core)
-  testImplementation(libs.strikt.arrow)
 
   // region Navigation
   implementation(libs.androidx.navigation3.ui)
@@ -121,4 +110,18 @@ dependencies {
   implementation(libs.ktor.logging)
   implementation(libs.ktor.auth.plugin)
   // endregion
+
+  androidTestImplementation(libs.androidx.espresso.core)
+  androidTestImplementation(libs.androidx.junit)
+  androidTestImplementation(libs.androidx.ui.test.junit4)
+  androidTestImplementation(platform(libs.androidx.compose.bom))
+  debugImplementation(libs.androidx.ui.test.manifest)
+  debugImplementation(libs.androidx.ui.tooling)
+
+  testImplementation(libs.kotlin.test)
+  testImplementation(libs.junit)
+  testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.mockk)
+  testImplementation(libs.strikt.arrow)
+  testImplementation(libs.strikt.core)
 }
