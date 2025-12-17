@@ -43,6 +43,7 @@ kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collec
 mockk = { module = "io.mockk:mockk", version = "1.14.5" }
 strikt-core = { module = "io.strikt:strikt-core", version.ref = "strikt" }
 strikt-arrow = { module = "io.strikt:strikt-arrow", version.ref = "strikt" }
+test-parameter-injector = { module = "com.google.testparameterinjector:test-parameter-injector", version = "1.20" }
 arrow-core = { module = "io.arrow-kt:arrow-core", version = "2.1.2" }
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-http = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil" }

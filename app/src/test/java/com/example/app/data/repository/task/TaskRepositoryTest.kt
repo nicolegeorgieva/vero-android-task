@@ -6,6 +6,8 @@ import com.example.app.data.ErrorMapper
 import com.example.app.data.ErrorResponse
 import com.example.app.data.datasource.task.TaskLocalDataSource
 import com.example.app.data.datasource.task.TaskRemoteDataSource
+import com.google.testing.junit.testparameterinjector.TestParameter
+import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.just
@@ -14,6 +16,7 @@ import io.mockk.runs
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import strikt.api.expectThat
 import strikt.arrow.isLeft
 import strikt.arrow.isRight
@@ -21,6 +24,7 @@ import strikt.assertions.isNotNull
 import strikt.assertions.isNull
 import java.net.UnknownHostException
 
+@RunWith(TestParameterInjector::class)
 class TaskRepositoryTest {
   private val localDataSource = mockk<TaskLocalDataSource>()
   private val remoteDataSource = mockk<TaskRemoteDataSource>()
@@ -140,7 +144,9 @@ class TaskRepositoryTest {
 
   // region refresh()
   @Test
-  fun `Show loading & successful fetch from server`() = runTest {
+  fun `Show loading & successful fetch from server`(
+    @TestParameter showLoading: Boolean
+  ) = runTest {
     // given
     coEvery {
       remoteDataSource.fetchTasks()
@@ -149,20 +155,20 @@ class TaskRepositoryTest {
 
     repository.tasksFlow.test {
       // when
-      repository.refresh(showLoading = true)
+      repository.refresh(showLoading = showLoading)
       // then
-      val first = awaitItem()
-      expectThat(first).isNull()
+      if (showLoading) {
+        val loading = awaitItem()
+        expectThat(loading).isNull()
+      }
 
-      val second = awaitItem()
-      expectThat(second).isNotNull().isRight(listOf(TASK_1))
+      val data = awaitItem()
+      expectThat(data).isNotNull().isRight(listOf(TASK_1))
       coVerify(exactly = 1) {
         localDataSource.insertAllTasks(listOf(TASK_1_ENTITY))
       }
       expectNoEvents()
     }
   }
-
-
   // endregion
 }

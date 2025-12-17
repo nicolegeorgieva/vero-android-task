@@ -126,5 +126,6 @@ dependencies {
   testImplementation(libs.strikt.arrow)
   testImplementation(libs.strikt.core)
   testImplementation(libs.turbine)
+  testImplementation(libs.test.parameter.injector)
   // endregion
 }
