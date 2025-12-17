@@ -11,15 +11,17 @@ import com.example.app.domain.model.Session
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
 import org.junit.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
 import java.net.UnknownHostException
 
 class LoginRepositoryTest {
-  private lateinit var repository: LoginRepository
   private val dataSource = mockk<LoginDataSource>()
+  private val repository = LoginRepository(
+    dataSource = dataSource,
+    errorMapper = LoginErrorMapper(errorMapper = ErrorMapper())
+  )
 
   private val rightCredentials = Credentials(
     username = "test",
@@ -31,15 +33,6 @@ class LoginRepositoryTest {
     val username: String,
     val password: String,
   )
-
-
-  @Before
-  fun setup() {
-    repository = LoginRepository(
-      dataSource = dataSource,
-      errorMapper = LoginErrorMapper(errorMapper = ErrorMapper())
-    )
-  }
 
   @Test
   fun `Successful login with mapped SessionDto to Session domain`() = runTest {
