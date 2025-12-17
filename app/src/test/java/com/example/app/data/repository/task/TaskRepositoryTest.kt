@@ -51,9 +51,9 @@ class TaskRepositoryTest {
     } returns listOf(taskEntity)
     coEvery {
       remoteDataSource.fetchTasks()
-    } returns Either.Right(listOf(taskDto))
+    } returns Either.Right(listOf(taskDto, taskDto))
     coEvery {
-      localDataSource.insertAllTasks(task = listOf(taskEntity))
+      localDataSource.insertAllTasks(task = listOf(taskEntity, taskEntity))
     } just runs
 
     // when
@@ -63,7 +63,7 @@ class TaskRepositoryTest {
       expectThat(first).isNotNull().isRight(listOf(task))
 
       val second = awaitItem()
-      expectThat(second).isNotNull().isRight(listOf(task))
+      expectThat(second).isNotNull().isRight(listOf(task, task))
     }
   }
 }
