@@ -24,9 +24,7 @@ class TaskRepository @Inject constructor(
 ) {
   private val tasksFlow = MutableSharedFlow<Either<ErrorResponse, List<Task>>?>()
 
-  fun getTasks(
-    viewModelScope: CoroutineScope
-  ): Flow<Either<ErrorResponse, List<Task>>?> {
+  fun getTasks(viewModelScope: CoroutineScope): Flow<Either<ErrorResponse, List<Task>>?> {
     viewModelScope.launch {
       val dbTasks = localDataSource.getAllTasks()
       if (dbTasks.isNotEmpty()) {
