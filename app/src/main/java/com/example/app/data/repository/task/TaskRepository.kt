@@ -1,5 +1,6 @@
 package com.example.app.data.repository.task
 
+import androidx.annotation.VisibleForTesting
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
@@ -22,7 +23,8 @@ class TaskRepository @Inject constructor(
   private val taskMapper: TaskMapper,
   private val errorMapper: ErrorMapper,
 ) {
-  private val tasksFlow = MutableSharedFlow<Either<ErrorResponse, List<Task>>?>()
+  @VisibleForTesting
+  val tasksFlow = MutableSharedFlow<Either<ErrorResponse, List<Task>>?>()
 
   fun getTasks(viewModelScope: CoroutineScope): Flow<Either<ErrorResponse, List<Task>>?> {
     viewModelScope.launch {
@@ -72,12 +74,13 @@ class TaskRepository @Inject constructor(
       .map { tasks ->
         tasks.map(taskMapper::dtoToDomain)
       }
-      .onRight { tasks ->
-        localDataSource.insertAllTasks(
-          tasks.map(taskMapper::domainToEntity)
-        )
-      }
     tasksFlow.emit(res)
+
+    res.onRight { tasks ->
+      localDataSource.insertAllTasks(
+        tasks.map(taskMapper::domainToEntity)
+      )
+    }
     return res
   }
 }

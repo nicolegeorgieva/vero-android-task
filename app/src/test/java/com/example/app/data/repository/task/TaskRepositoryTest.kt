@@ -18,6 +18,7 @@ import strikt.api.expectThat
 import strikt.arrow.isLeft
 import strikt.arrow.isRight
 import strikt.assertions.isNotNull
+import strikt.assertions.isNull
 import java.net.UnknownHostException
 
 class TaskRepositoryTest {
@@ -138,6 +139,30 @@ class TaskRepositoryTest {
   // endregion
 
   // region refresh()
+  @Test
+  fun `Show loading & successful fetch from server`() = runTest {
+    // given
+    coEvery {
+      remoteDataSource.fetchTasks()
+    } returns Either.Right(listOf(TASK_1_DTO))
+    coEvery { localDataSource.insertAllTasks(any()) } just runs
+
+    repository.tasksFlow.test {
+      // when
+      repository.refresh(showLoading = true)
+      // then
+      val first = awaitItem()
+      expectThat(first).isNull()
+
+      val second = awaitItem()
+      expectThat(second).isNotNull().isRight(listOf(TASK_1))
+      coVerify(exactly = 1) {
+        localDataSource.insertAllTasks(listOf(TASK_1_ENTITY))
+      }
+      expectNoEvents()
+    }
+  }
+
 
   // endregion
 }
