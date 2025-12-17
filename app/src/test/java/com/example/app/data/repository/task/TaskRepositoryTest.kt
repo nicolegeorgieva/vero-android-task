@@ -144,7 +144,7 @@ class TaskRepositoryTest {
 
   // region refresh()
   @Test
-  fun `Show loading & successful fetch from server`(
+  fun `Successful fetch from server`(
     @TestParameter showLoading: Boolean
   ) = runTest {
     // given
@@ -166,6 +166,34 @@ class TaskRepositoryTest {
       expectThat(data).isNotNull().isRight(listOf(TASK_1))
       coVerify(exactly = 1) {
         localDataSource.insertAllTasks(listOf(TASK_1_ENTITY))
+      }
+      expectNoEvents()
+    }
+  }
+
+  @Test
+  fun `No internet`(
+    @TestParameter showLoading: Boolean
+  ) = runTest {
+    // given
+    coEvery {
+      remoteDataSource.fetchTasks()
+    } returns Either.Left(UnknownHostException())
+    coEvery { localDataSource.insertAllTasks(any()) } just runs
+
+    repository.tasksFlow.test {
+      // when
+      repository.refresh(showLoading = showLoading)
+      // then
+      if (showLoading) {
+        val loading = awaitItem()
+        expectThat(loading).isNull()
+      }
+
+      val data = awaitItem()
+      expectThat(data).isNotNull().isLeft(ErrorResponse.NoInternet)
+      coVerify(exactly = 0) {
+        localDataSource.insertAllTasks(any())
       }
       expectNoEvents()
     }
