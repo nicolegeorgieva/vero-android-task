@@ -118,10 +118,13 @@ dependencies {
   debugImplementation(libs.androidx.ui.test.manifest)
   debugImplementation(libs.androidx.ui.tooling)
 
+  // region tests
   testImplementation(libs.kotlin.test)
   testImplementation(libs.junit)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.mockk)
   testImplementation(libs.strikt.arrow)
   testImplementation(libs.strikt.core)
+  testImplementation(libs.turbine)
+  // endregion
 }
