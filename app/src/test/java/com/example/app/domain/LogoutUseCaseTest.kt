@@ -33,7 +33,7 @@ class LogoutUseCaseTest {
   }
 
   @Test
-  fun `Log out`() = runTest {
+  fun logout() = runTest {
     // given
     sessionStorage.store(SESSION_1)
     coEvery { workerManager.cancel() } just runs
