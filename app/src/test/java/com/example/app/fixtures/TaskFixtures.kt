@@ -2,8 +2,16 @@ package com.example.app.fixtures
 
 import com.example.app.data.datasource.task.TaskDto
 import com.example.app.data.repository.task.TaskMapper
+import com.example.app.domain.model.Task
 
 private val taskMapper = TaskMapper()
+
+val EMPTY_TASK = Task(
+  id = "",
+  title = "",
+  description = "",
+  colorHex = ""
+)
 
 val TASK_1_DTO = TaskDto(
   task = "1",
