@@ -2,7 +2,6 @@ package com.example.app.data
 
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
-import kotlinx.coroutines.test.runTest
 import org.junit.Test
 import org.junit.runner.RunWith
 import strikt.api.expectThat
@@ -30,7 +29,7 @@ class ErrorMapperTest {
   @Test
   fun `Error mapping`(
     @TestParameter testCase: ErrorMappingTestCase,
-  ) = runTest {
+  ) {
     // when
     val error = errorMapper.map(testCase.error)
     // then
