@@ -8,6 +8,8 @@ import com.example.app.data.datasource.login.LoginDataSource
 import com.example.app.data.datasource.login.OauthDto
 import com.example.app.data.datasource.login.SessionDto
 import com.example.app.domain.model.Session
+import com.example.app.fixtures.ACCESS_TOKEN_1
+import com.example.app.fixtures.CORRECT_CREDENTIALS
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -23,39 +25,28 @@ class LoginRepositoryTest {
     errorMapper = LoginErrorMapper(errorMapper = ErrorMapper())
   )
 
-  private val rightCredentials = Credentials(
-    username = "test",
-    password = "123"
-  )
-  private val accessToken = "J5672"
-
-  private data class Credentials(
-    val username: String,
-    val password: String,
-  )
-
   @Test
   fun `Successful login with mapped SessionDto to Session domain`() = runTest {
     // given
     coEvery {
       dataSource.login(
-        username = rightCredentials.username,
-        password = rightCredentials.password,
+        username = CORRECT_CREDENTIALS.username,
+        password = CORRECT_CREDENTIALS.password,
       )
     } returns Either.Right(
-      SessionDto(oauth = OauthDto(accessToken = accessToken))
+      SessionDto(oauth = OauthDto(accessToken = ACCESS_TOKEN_1))
     )
 
     // when
     val res = repository.login(
-      username = rightCredentials.username,
-      password = rightCredentials.password,
+      username = CORRECT_CREDENTIALS.username,
+      password = CORRECT_CREDENTIALS.password,
     )
 
     // then
     expectThat(res).isEqualTo(
       Either.Right(
-        Session(accessToken = accessToken)
+        Session(accessToken = ACCESS_TOKEN_1)
       )
     )
   }
@@ -65,15 +56,15 @@ class LoginRepositoryTest {
     // given
     coEvery {
       dataSource.login(
-        username = rightCredentials.username,
-        password = rightCredentials.password,
+        username = CORRECT_CREDENTIALS.username,
+        password = CORRECT_CREDENTIALS.password,
       )
     } returns Either.Left(UnknownHostException())
 
     // when
     val res = repository.login(
-      username = rightCredentials.username,
-      password = rightCredentials.password,
+      username = CORRECT_CREDENTIALS.username,
+      password = CORRECT_CREDENTIALS.password,
     )
 
     // then
@@ -85,9 +76,9 @@ class LoginRepositoryTest {
   @Test
   fun `Wrong credentials should lead to LoginError-IncorrectCredentials`() = runTest {
     // given
-    val wrongCredentials = rightCredentials.copy(
-      username = "${rightCredentials.username}1",
-      password = "${rightCredentials.password}88"
+    val wrongCredentials = CORRECT_CREDENTIALS.copy(
+      username = "${CORRECT_CREDENTIALS.username}1",
+      password = CORRECT_CREDENTIALS.password
     )
     coEvery {
       dataSource.login(

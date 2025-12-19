@@ -6,6 +6,12 @@ import com.example.app.data.ErrorMapper
 import com.example.app.data.ErrorResponse
 import com.example.app.data.datasource.task.TaskLocalDataSource
 import com.example.app.data.datasource.task.TaskRemoteDataSource
+import com.example.app.fixtures.TASK_1
+import com.example.app.fixtures.TASK_1_DTO
+import com.example.app.fixtures.TASK_1_ENTITY
+import com.example.app.fixtures.TASK_2
+import com.example.app.fixtures.TASK_2_DTO
+import com.example.app.fixtures.TASK_2_ENTITY
 import com.google.testing.junit.testparameterinjector.TestParameter
 import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import io.mockk.coEvery

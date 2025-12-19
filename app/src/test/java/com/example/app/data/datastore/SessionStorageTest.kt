@@ -1,5 +1,7 @@
 package com.example.app.data.datastore
 
+import com.example.app.fixtures.ACCESS_TOKEN_1
+import com.example.app.fixtures.SESSION_1
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

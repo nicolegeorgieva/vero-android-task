@@ -1,6 +1,7 @@
-package com.example.app.data.repository.task
+package com.example.app.fixtures
 
 import com.example.app.data.datasource.task.TaskDto
+import com.example.app.data.repository.task.TaskMapper
 
 private val taskMapper = TaskMapper()
 

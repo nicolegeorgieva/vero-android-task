@@ -3,6 +3,7 @@ package com.example.app.data.repository.task
 import com.example.app.data.database.task.TaskEntity
 import com.example.app.data.datasource.task.TaskDto
 import com.example.app.domain.model.Task
+import com.example.app.fixtures.TASK_1_DTO
 import org.junit.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo

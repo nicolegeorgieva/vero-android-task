@@ -1,4 +1,4 @@
-package com.example.app.data.datastore
+package com.example.app.fixtures
 
 import com.example.app.domain.model.Session
 
