@@ -36,9 +36,7 @@ class SessionUseCaseTest {
   @Before
   fun setup() {
     dataStore.clear()
-    coEvery {
-      workerManager.start()
-    } just runs
+    coEvery { workerManager.start() } just runs
   }
 
   // region getSession()
