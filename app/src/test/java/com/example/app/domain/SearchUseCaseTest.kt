@@ -38,7 +38,6 @@ class SearchUseCaseTest {
     expectThat(tasks).isEmpty()
   }
 
-  // region Query match
   @Test
   fun `Two match a query`() {
     // when
@@ -49,52 +48,6 @@ class SearchUseCaseTest {
     // then
     expectThat(tasks).containsExactly(TASK_1, TASK_2)
   }
-
-  @Test
-  fun `Match task id`() {
-    // when
-    val tasks = searchUseCase.search(
-      tasks = listOf(TASK_1, TASK_2),
-      query = "2"
-    )
-    // then
-    expectThat(tasks).containsExactly(TASK_2)
-  }
-
-  @Test
-  fun `Match task title`() {
-    // when
-    val tasks = searchUseCase.search(
-      tasks = listOf(TASK_1, TASK_2),
-      query = "materials"
-    )
-    // then
-    expectThat(tasks).containsExactly(TASK_1)
-  }
-
-  @Test
-  fun `Match task description`() {
-    // when
-    val tasks = searchUseCase.search(
-      tasks = listOf(TASK_1, TASK_2),
-      query = "om"
-    )
-    // then
-    expectThat(tasks).containsExactly(TASK_1)
-  }
-
-  @Test
-  fun `Match task color hex`() {
-    // when
-    val task2 = TASK_2.copy(colorHex = "#FFFFFF")
-    val tasks = searchUseCase.search(
-      tasks = listOf(TASK_1, task2),
-      query = "#FFFFFF"
-    )
-    // then
-    expectThat(tasks).containsExactly(task2)
-  }
-
 
   enum class SearchTestCase(
     val query: String,
@@ -122,7 +75,7 @@ class SearchUseCaseTest {
     // region title
     PARTIAL_TITLE_MATCH(
       query = "y",
-      task = EMPTY_TASK.copy(title = "Buy"),
+      task = EMPTY_TASK.copy(title = "Buy materials"),
       shouldMatch = true,
     ),
     EXACT_TITLE_MATCH(
@@ -131,8 +84,8 @@ class SearchUseCaseTest {
       shouldMatch = true,
     ),
     NO_TITLE_MATCH(
-      query = "Buy",
-      task = EMPTY_TASK.copy(id = "Build the base"),
+      query = "Bui",
+      task = EMPTY_TASK.copy(title = "Buy materials"),
       shouldMatch = false,
     ),
     // endregion
@@ -144,13 +97,31 @@ class SearchUseCaseTest {
       shouldMatch = true,
     ),
     EXACT_DESCRIPTION_MATCH(
-      query = "Buy materials",
-      task = EMPTY_TASK.copy(description = "Buy materials"),
+      query = "From local market",
+      task = EMPTY_TASK.copy(description = "From local market"),
       shouldMatch = true,
     ),
     NO_DESCRIPTION_MATCH(
-      query = "Buy",
-      task = EMPTY_TASK.copy(description = "Build the base"),
+      query = "marketing",
+      task = EMPTY_TASK.copy(description = "From local market"),
+      shouldMatch = false,
+    ),
+    // endregion
+
+    // region color hex
+    PARTIAL_COLOR_MATCH(
+      query = "#",
+      task = EMPTY_TASK.copy(colorHex = "#FFFFFF"),
+      shouldMatch = true,
+    ),
+    EXACT_COLOR_MATCH(
+      query = "#FFFFFF",
+      task = EMPTY_TASK.copy(colorHex = "#FFFFFF"),
+      shouldMatch = true,
+    ),
+    NO_COLOR_MATCH(
+      query = "#0000FF",
+      task = EMPTY_TASK.copy(colorHex = "#FFFFFF"),
       shouldMatch = false,
     ),
     // endregion
@@ -168,5 +139,4 @@ class SearchUseCaseTest {
       expectThat(res).isEmpty()
     }
   }
-  // endregion
 }
